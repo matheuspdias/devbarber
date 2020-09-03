@@ -1,4 +1,14 @@
 import React from 'react';
-import styles from 'styled-components/native';
+import styled from 'styled-components/native';
 
-export const Container = styles.SafeAreaView``;
+export const Container = styled.SafeAreaView`
+    backgroundColor: #63C2D1;
+    flex: 1;
+    justifyContent:center;
+    alignItems:center;
+`;
+
+
+export const LoadingIcon = styled.ActivityIndicator`
+    marginTop: 50px;
+`;
