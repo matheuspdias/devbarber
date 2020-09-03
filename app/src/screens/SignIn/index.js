@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 import { UserContext } from '../../contexts/UserContext';
 
-import { 
+import {
     Container,
     InputArea,
     CustomButton,
@@ -30,9 +30,10 @@ export default () => {
     const [passwordField, setPasswordField] = useState('');
 
     const handleSignClick = async () => {
-        if(emailField !== '' && passwordField !== '') {
+        if(emailField != '' && passwordField != '') {
 
             let json = await Api.signIn(emailField, passwordField);
+
             if(json.token) {
                 await AsyncStorage.setItem('token', json.token);
 
@@ -44,11 +45,10 @@ export default () => {
                 });
 
                 navigation.reset({
-                    router: [{name: 'MainTab'}]
+                    routes:[{name:'MainTab'}]
                 });
-
             } else {
-                alert('E-Mail e/ou senha incorretos!');
+                alert('E-mail e/ou senha errados!');
             }
 
         } else {
@@ -65,21 +65,21 @@ export default () => {
     return (
         <Container>
             <BarberLogo width="100%" height="160" />
-            
-            <InputArea>
 
-                <SignInput 
-                IconSvg={EmailIcon} 
-                placeholder="Digite seu E-Mail"
-                value={emailField}
-                onChangeText={t => setEmailField(t)}
+            <InputArea>
+                <SignInput
+                    IconSvg={EmailIcon}
+                    placeholder="Digite seu e-mail"
+                    value={emailField}
+                    onChangeText={t=>setEmailField(t)}
                 />
-                <SignInput 
-                IconSvg={LockIcon}
-                placeholder="Digite sua senha"
-                value={passwordField}
-                onChangeText={t => setPasswordField(t)}
-                password={true}
+
+                <SignInput
+                    IconSvg={LockIcon}
+                    placeholder="Digite sua senha"
+                    value={passwordField}
+                    onChangeText={t=>setPasswordField(t)}
+                    password={true}
                 />
 
                 <CustomButton onPress={handleSignClick}>
@@ -93,5 +93,5 @@ export default () => {
             </SignMessageButton>
 
         </Container>
-    )
+    );
 }
