@@ -65,7 +65,14 @@ export default () => {
             setLoading(true);
             setList([]);
 
-            let res = await Api.getBarbers();
+            let lat = null;
+            let lng = null;
+            if(coords) {
+                lat = coords.latitude;
+                lng = coords.longitude;
+            }
+
+            let res = await Api.getBarbers(lat, lng, locationText);
             if(res.error == '') {
                 if(res.loc) {
                     setLocationText(res.loc);
@@ -86,6 +93,11 @@ export default () => {
 
         const onRefresh = () => {
             setRefreshing(false);
+            getBarbers();
+        }
+
+        const handleLocationSearch = () => {
+            setCoords({});
             getBarbers();
         }
     
@@ -109,6 +121,7 @@ export default () => {
                         placeholderTextColor="#FFF"
                         value={locationText}
                         onChangeText={t=>setLocationText(t)}
+                        onEndEditing={handleLocationSearch}
                    />
                    <LocationFinder onPress={handleLocationFinder}>
                        <MyLocationIcon width="24" height="24" fill="#FFF" />
