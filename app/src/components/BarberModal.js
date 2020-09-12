@@ -50,11 +50,44 @@ const UserName = styled.Text`
     color: #000;
 `;
 
+const ServiceInfo = styled.View`
+    flexDirection: row;
+    justifyContent: space-between;
+`;
+
+const ServiceName = styled.Text`
+    fontSize: 16px;
+    fontWeight: bold;
+`;
+
+const ServicePrice = styled.Text`
+    fontSize: 16px;
+    fontWeight: bold;
+`;
+
+const FinishButton = styled.TouchableOpacity`
+    backgroundColor: #268596;
+    height: 60px;
+    justifyContent: center;
+    alignItems: center;
+    borderRadius: 10px;
+`;
+
+const FinishButtonText = styled.Text`
+    color: #FFF;
+    fontSize: 17px;
+    fontWeight: bold;
+`;
+
 export default ({ show, setShow, user, service }) => {
     const navigation = useNavigation();
 
     const handleCloseButton = () => {
         setShow(false);
+    }
+
+    const handleFinishClick = () => {
+
     }
 
     return (
@@ -75,6 +108,20 @@ export default ({ show, setShow, user, service }) => {
                             <UserName>{user.name}</UserName>
                         </UserInfo>
                     </ModalItem>
+                    
+                    {service != null &&
+                        <ModalItem>
+                            <ServiceInfo>
+                                <ServiceName>{user.services[service].name}</ServiceName>
+                                <ServicePrice>R$ {user.services[service].price.toFixed(2)}</ServicePrice>
+                            </ServiceInfo>
+                        </ModalItem>
+                    }
+
+                    <FinishButton onPress={handleFinishClick}>
+                        <FinishButtonText>Finalizar Agendamento</FinishButtonText>
+                    </FinishButton>
+
                 </ModalBody>
             </ModalArea>
         </Modal>
