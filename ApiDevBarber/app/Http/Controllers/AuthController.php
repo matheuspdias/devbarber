@@ -64,5 +64,47 @@ class AuthController extends Controller
 
         return $array;
     }
+
+    public function login(Request $request) {
+        $array = ['error'=>''];
+
+        $email = $request->input('email');
+        $password = $request->input('password');
+
+        $token = auth()->attempt([
+            'email' => $email,
+            'password' => $password
+        ]);
+
+        if(!$token) {
+            $array['error'] = 'Usuarios e/ou senha incorretos!';
+            return $array;
+        }
+
+        $info = auth()->user();
+        $info['avatar'] = url('media/avatars/'.$info['avatar']);
+        $array['data'] = $info;
+        $array['token'] = $token;
+
+        return $array;
+    }
+
+    public function logout() {
+        auth()->logout();
+        return ['error'=>''];
+    }
+
+    public function refresh() {
+        $array = ['error'=>''];
+
+        $token = auth()->refresh();
+
+        $info = auth()->user();
+        $info['avatar'] = url('media/avatars/'.$info['avatar']);
+        $array['data'] = $info;
+        $array['token'] = $token;
+
+        return $array;
+    }
 }
 
